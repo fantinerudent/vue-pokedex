@@ -1,10 +1,11 @@
 <template>
   <div id="app">
+    <AppHeader/>
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/pokemons"> Les pokéké</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -30,3 +31,13 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import AppHeader from "./components/AppHeader"
+export default {
+  name: "app",
+  components: {
+    AppHeader,
+  },
+};
+</script>
