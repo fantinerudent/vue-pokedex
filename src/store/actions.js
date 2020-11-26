@@ -9,8 +9,6 @@ export const getPokemons = ({ commit }) => {
 
 export const getPokemonInformations = ({ commit }, url) => {
   axios.get(url).then((response) => {
-    let id = response.data.id;
-    console.log(id);
     commit("SET_ALL_INFORMATIONS", response.data);
   });
 };

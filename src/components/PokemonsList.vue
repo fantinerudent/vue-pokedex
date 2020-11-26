@@ -1,10 +1,9 @@
 <template>
   <div>
     <div v-for="pokemon in pokemons" :key="pokemon.name">
-      <button @click="getInfo(pokemon.url)">
+      <button @click="shareDataUrl(pokemon.url)">
         Learn more about {{ pokemon.name }}
       </button>
-      <!-- <PokemonCard :name="pokemon.name" :url="pokemon.url"/> -->
     </div>
   </div>
 </template>
@@ -25,8 +24,8 @@ export default {
     },
   },
   methods: {
-    getInfo(url) {
-      this.$store.dispatch(`getPokemonInformations`, url);
+    shareDataUrl(url) {
+      this.$router.push({ name: "Pokemon's detail", params: { data: url } });
     },
   },
 };
