@@ -1,15 +1,18 @@
 <template>
   <div>
-    <p>name: {{ pokemon.name }}</p>
-    <p>type:</p>
+    <button @click="getInfo(url)">Learn more about {{ name }}</button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["pokemon"],
+  props: ["name", "url"],
+  methods: {
+    getInfo(url) {
+      this.$store.dispatch(`getPokemonInformations`, url);
+    },
+  },
 };
-
 </script>
 
 <style>

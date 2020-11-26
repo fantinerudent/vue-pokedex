@@ -6,3 +6,16 @@ export const getPokemons = ({ commit }) => {
     commit("SET_ALL_POKEMONS", response.data.results);
   });
 };
+
+export const getPokemonInformations = ({ commit }, url) => {
+  axios.get(url).then((response) => {
+    let id = response.data.id;
+    console.log(id)
+    commit(
+      "SET_ALL_INFORMATIONS",
+      id,
+      response.data
+    );
+  });
+};
+

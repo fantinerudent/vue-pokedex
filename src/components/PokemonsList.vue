@@ -1,6 +1,8 @@
 <template>
   <div>
-    <PokemonCard v-for="pokemon in pokemons" :key="pokemon.name" />
+    <p v-for="pokemon in pokemons" :key="pokemon.name">
+      <PokemonCard :name="pokemon.name" :url="pokemon.url"/>
+    </p>
   </div>
 </template>
 
@@ -16,7 +18,8 @@ export default {
   },
   computed: {
     pokemons() {
-      return this.$store.state.pokemons.results;
+      console.log(this.$store.state.pokemons);
+      return this.$store.state.pokemons;
     },
   },
 };
