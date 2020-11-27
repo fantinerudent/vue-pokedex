@@ -38,6 +38,7 @@ export default {
 #pokemon-container {
   display: flex;
   flex-direction: column;
+  width: fit-content;
 }
 #container img {
   margin: 20px;

@@ -10,7 +10,8 @@ export default {
 
 <style>
 .header {
-  background-color: lime;
-  height: 50px;
+  background: url(../assets/pokemonbanner.png) no-repeat;
+  background-size: 100%;
+  height: 220px;
 }
 </style>

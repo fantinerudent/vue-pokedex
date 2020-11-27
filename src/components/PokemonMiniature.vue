@@ -1,9 +1,7 @@
 <template>
-  <div>
-
-      <p> TEST: {{ pokemon.name}} </p>
-      <img :src="pokemon.image" alt="" srcset="">
-    
+  <div class="container">
+    <p> {{ pokemon.name }}</p>
+    <img :v-model="pokemon" :src="pokemon.image" alt="" srcset="" />
   </div>
 </template>
 
@@ -15,6 +13,11 @@ export default {
 
 <style>
 img {
-  width: 30px;
+  width: 5vw;
+  padding: 20px;
+}
+.container {
+  display:flex;
+  flex-direction: column;
 }
 </style>

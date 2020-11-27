@@ -2,10 +2,10 @@
   <div>
     <h1>Les pokékés</h1>
     <p>
-      Ici se trouvent la liste des pokémons, je vais trouver les pokémons rangés
+      Ici se trouve la liste des pokémons, je vais trouver les pokémons rangés
       dans mon data store, je vais créer un component pour les diplays ok ?
     </p>
-    <div class="toto"><PokemonsList /></div>
+    <PokemonsList class="toto"/>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
 
 <style>
 .toto {
-  background-color: red;
-  height: 100px;
+  max-width: 70%;
+  margin: 0 auto;
 }
 </style>

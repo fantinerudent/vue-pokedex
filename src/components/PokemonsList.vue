@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <div v-for="pokemon in this.pokemons" :key="pokemon.name">
+  <div class="container">
+    <div
+      class="pokemon-container"
+      v-for="pokemon in this.pokemons"
+      :key="pokemon.name"
+    >
       <PokemonMiniature :pokemon="pokemon" />
       <button @click="shareDataUrl(pokemon)">
         Learn more about {{ pokemon.name }}
@@ -41,4 +45,19 @@ export default {
 </script>
 
 <style>
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-around;
+}
+
+.pokemon-container {
+  padding: 20px;
+  background-color: red;
+  min-width: 42%;
+  margin: 10px;
+  border-radius: 20px;
+}
 </style>

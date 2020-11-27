@@ -11,5 +11,5 @@ export const SET_ALL_INFORMATIONS = (state, informations) => {
 };
 
 export const SET_ACTUAL_POKEMON = (state, pokemon) => {
-  state.actualPokemon = pokemon
-}
+  state.actualPokemon = pokemon;
+};
