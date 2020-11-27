@@ -15,12 +15,12 @@
 export default {
   data() {
     return {
-      url: String,
+      pokemon: [],
     };
   },
-  mounted() {
-    this.url = this.$route.params.data;
-    this.$store.dispatch(`getPokemonInformations`, this.url);
+  beforeMount() {
+    this.pokemon = this.$route.params.data;
+    this.$store.commit("SET_ACTUAL_POKEMON", this.pokemon);
   },
 
   computed: {

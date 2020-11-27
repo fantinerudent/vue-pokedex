@@ -9,3 +9,7 @@ export const SET_ALL_INFORMATIONS = (state, informations) => {
     index
   ].image = `https://pokeres.bastionbot.org/images/pokemon/${informations.id}.png`;
 };
+
+export const SET_ACTUAL_POKEMON = (state, pokemon) => {
+  state.actualPokemon = pokemon
+}
