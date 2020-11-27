@@ -3,7 +3,9 @@ export const SET_ALL_POKEMONS = (state, pokemons) => {
 };
 
 export const SET_ALL_INFORMATIONS = (state, informations) => {
-  state.actualPokemon = informations;
-  state.actualPokemon.image = `https://pokeres.bastionbot.org/images/pokemon/${state.actualPokemon.id}.png`;
-  console.log(state.actualPokemon);
+  let index = Number(informations.id - 1);
+  state.pokemons[index] = informations;
+  state.pokemons[
+    index
+  ].image = `https://pokeres.bastionbot.org/images/pokemon/${informations.id}.png`;
 };

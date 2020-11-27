@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-for="pokemon in pokemons" :key="pokemon.name">
+    <div v-for="pokemon in this.pokemons" :key="pokemon.name">
+      <PokemonMiniature :pokemon="pokemon" />
       <button @click="shareDataUrl(pokemon.url)">
         Learn more about {{ pokemon.name }}
       </button>
@@ -9,19 +10,24 @@
 </template>
 
 <script>
-// import PokemonCard from "./PokemonCard";
+import PokemonMiniature from "./PokemonMiniature";
 
 export default {
   components: {
-    // PokemonCard,
+    PokemonMiniature,
   },
-  mounted() {
-    this.$store.dispatch("getPokemons");
+  data() {
+      return {
+        pokemons: []
+      };
   },
-  computed: {
-    pokemons() {
-      return this.$store.state.pokemons;
-    },
+  beforeCreate() {
+    this.$store.dispatch("getPokemons").then(() => {
+      this.$store.state.pokemons.map((pokemon) => {
+        this.$store.dispatch("getPokemonInformations", pokemon.url);
+        return this.pokemons = this.$store.state.pokemons;
+      });
+    });
   },
   methods: {
     shareDataUrl(url) {
