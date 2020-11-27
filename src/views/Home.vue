@@ -1,17 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <p> Je suis un futur pokédex </p>
+    <p>Are you ready for your next adventure ?</p>
+    <img alt="pokemons runes landscape" src="../assets/runes.jpg" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
-
 export default {
-  name: 'Home',
-  components: {
-  }
-}
+  name: "Home",
+  components: {},
+};
 </script>
+
+<style >
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+img {
+  width: 50vw;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+</style>
