@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <p> {{ pokemon.name }}</p>
-    <img :v-model="pokemon" :src="pokemon.image" alt="" srcset="" />
+    <img  :src="pokemon.image" alt="" srcset="" />
   </div>
 </template>
 

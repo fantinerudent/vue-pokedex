@@ -2,7 +2,7 @@
   <div class="container">
     <div
       class="pokemon-container"
-      v-for="pokemon in this.pokemons"
+      v-for="pokemon in pokemons"
       :key="pokemon.name"
     >
       <PokemonMiniature :pokemon="pokemon" />
@@ -25,11 +25,13 @@ export default {
       pokemons: [],
     };
   },
-  beforeMount() {
+  beforeCreate() {
     this.$store.dispatch("getPokemons").then(() => {
       this.$store.state.pokemons.map((pokemon) => {
         this.$store.dispatch("getPokemonInformations", pokemon.url);
-        this.pokemons = this.$store.state.pokemons;
+        setTimeout(() => {
+          this.pokemons = this.$store.state.pokemons;
+        }, 100);
       });
     });
   },
