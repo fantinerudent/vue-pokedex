@@ -14,6 +14,7 @@ export const getPokemons = async ({ commit }) => {
 export const getPokemonInformations = async ({ commit }, url) => {
   const response = await axios.get(url);
   if (response.data) {
+    console.log(response.data)
     commit("SET_ALL_INFORMATIONS", response.data);
   }
 };

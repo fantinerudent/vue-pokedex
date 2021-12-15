@@ -2,7 +2,7 @@
   <div id="container">
     <div v-if="actualPokemon.name" id="pokemon-container">
       <div>{{ actualPokemon.name }}</div>
-      <img :src="actualPokemon.image" alt="pokemon" />
+      <img :src="actualPokemon.sprites.front_default" alt="pokemon" />
     </div>
     <div v-else>
       An error has been detected, please go back to the pokemons' list to choose

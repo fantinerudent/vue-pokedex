@@ -48,12 +48,16 @@ export default {
 
 <style>
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: space-around;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
 }
+  @media (max-width: 1100px) {
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+    
+  }
 
 .pokemon-container {
   padding: 20px;
