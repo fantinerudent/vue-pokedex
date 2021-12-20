@@ -1,15 +1,30 @@
 <template>
   <div class="container">
     <div id="pagination">
-    {{ totalNumberOfPokemons }}
-      <v-pagination v-model="page" :length="6"></v-pagination>
+      {{ totalNumberOfPokemons }}
+      <v-pagination
+        v-model="pagination.page"
+        :length="pagination.totalPages"
+        :total-visible="pagination.visible"
+        circle
+        @input="onChangePage"
+      ></v-pagination>
     </div>
     <div
       class="pokemon-container"
       v-for="pokemon in pokemons"
       :key="pokemon.name"
     >
-      <PokemonMiniature :pokemon="pokemon" />
+      <!-- <PokemonMiniature :pokemon="pokemon" /> -->
+      <p>{{ pokemon.name }}</p>
+      <!-- <img
+        id="pokeImg"
+        :src="pokemon.sprites.back_default"
+        alt=""
+        srcset=""
+        @mouseover="hovered = true"
+        @mouseleave="hovered = false"
+      /> -->
       <button @click="shareDataUrl(pokemon)">
         Learn more about {{ pokemon.name }}
       </button>
@@ -18,7 +33,7 @@
 </template>
 
 <script>
-import PokemonMiniature from "./PokemonMiniature";
+// import PokemonMiniature from "./PokemonMiniature";
 import axios from "axios";
 const customStyles = {
   ul: {
@@ -35,29 +50,29 @@ const customStyles = {
 
 export default {
   components: {
-    PokemonMiniature,
+    // PokemonMiniature,
   },
+  beforeCreate() {
+    this.$store.dispatch(`getPokemons`, { offset: 0 }).then(() => {
+      this.$store.state.pokemons.map((pokemon) => {
+        this.$store.dispatch("getPokemonInformations", pokemon.url);
+      });
+    });
+  },
+
   data() {
     return {
-      pokemons: [],
       customStyles,
-      page: 1,
-      selectedItems: [],
+      pagination: {
+        totalPages: 0,
+        page: 1,
+        visible: 7,
+        perPage: 20,
+      },
       totalNumberOfPokemons: this.totalNumber(),
     };
   },
-  beforeCreate() {
-    this.$store
-      .dispatch(`getPokemons`, { offset: this.selectedItems })
-      .then(() => {
-        this.$store.state.pokemons.map((pokemon) => {
-          this.$store.dispatch("getPokemonInformations", pokemon.url);
-          setTimeout(() => {
-            this.pokemons = this.$store.state.pokemons;
-          }, 100);
-        });
-      });
-  },
+
   methods: {
     shareDataUrl(pokemon) {
       this.$router.push({
@@ -67,21 +82,56 @@ export default {
     },
     totalNumber() {
       let result;
-    this.totalNumberOfPokemons = axios
+      this.totalNumberOfPokemons = axios
         .get(`https://pokeapi.co/api/v2/pokemon`)
         .then((response) => {
           if (response.data) {
-            return result = response.data.count;
+            return (result = response.data.count);
           }
-        }).then(() => {
-          this.totalNumberOfPokemons = result
         })
-        console.log('total number',this.totalNumberOfPokemons)
+        .then(() => {
+          this.totalNumberOfPokemons = result;
+          this.calculTotalPages();
+        });
     },
-
-    onChangePage(selectedItems) {
-      console.log("pouet", selectedItems);
-      // this.selectedItems = selectedItems + 20;
+    calculTotalPages() {
+      if (this.totalNumberOfPokemons) {
+        if (this.totalNumberOfPokemons % 20 !== 0) {
+          this.pagination.totalPages =
+            Math.floor(this.totalNumberOfPokemons / this.pagination.perPage) +
+            1;
+        } else
+          this.pagination.totalPages = Math.floor(
+            this.totalNumberOfPokemons / this.pagination.perPage
+          );
+      }
+    },
+    getPokemons() {
+      this.$store.dispatch(`getPokemons`, { offset: this.offset }).then(() => {
+        this.$store.state.pokemons.map((pokemon) => {
+          this.$store.dispatch("getPokemonInformations", pokemon.url);
+        });
+      });
+    },
+    onChangePage(selectedPage) {
+      this.pagination.page = selectedPage;
+      this.getPokemons();
+    },
+  },
+  computed: {
+    pokemons() {
+      return this.$store.state.pokemons;
+    },
+    itemsToDisplay() {
+      return this.pagination.page * 20 - 20;
+    },
+    offset() {
+      return this.itemsToDisplay;
+    },
+  },
+  watch: {
+    calculPagination() {
+      return (this.pagination.itemsToDisplay = this.getItems());
     },
   },
 };
@@ -98,6 +148,14 @@ export default {
     flex-direction: column;
   }
 }
+#pokeImg {
+  width: 5vw;
+  padding: 20px;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
 
 .pokemon-container {
   padding: 20px;
@@ -108,7 +166,8 @@ export default {
 }
 
 #pagination {
-  position: absolute;
-  background-color: yellow;
+  position: relative;
+  margin-bottom: 40px;
+  background-color: white;
 }
 </style>

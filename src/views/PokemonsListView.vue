@@ -26,9 +26,4 @@ export default {
   margin: 0 auto;
 }
 
-#pagination {
-  height: 10%;
-  background: yellow;
-  position: absolute;
-}
 </style>
