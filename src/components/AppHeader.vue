@@ -1,5 +1,5 @@
 <template>
-  <header class="header">i'm a header</header>
+  <header class="header"></header>
 </template>
 
 <script>
@@ -10,8 +10,8 @@ export default {
 
 <style>
 .header {
-  background: url(../assets/pokemonbanner.png) no-repeat center;
-  /* background-size: 100%; */
-  height: 200px;
+  background: url(../assets/pokemonbanner.png) #6db3f2 no-repeat center;
+  border: 5px black solid;
+  height: 20vh;
 }
 </style>

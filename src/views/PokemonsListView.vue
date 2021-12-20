@@ -5,13 +5,14 @@
       Ici se trouve la liste des pokémons, je vais trouver les pokémons rangés
       dans mon data store, je vais créer un component pour les diplays ok ?
     </p>
-    <PokemonsList class="toto"/>
+    <PokemonsList class="toto" />
   </div>
 </template>
 
 
 <script>
 import PokemonsList from "../components/PokemonsList";
+
 export default {
   components: {
     PokemonsList,
@@ -23,5 +24,11 @@ export default {
 .toto {
   max-width: 80%;
   margin: 0 auto;
+}
+
+#pagination {
+  height: 10%;
+  background: yellow;
+  position: absolute;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <AppHeader />
-    <audio controls autoplay src="../src/assets/pokemon.mp3">
+    <!-- <audio controls autoplay src="../src/assets/pokemon.mp3">
       Your browser does not support the
-    </audio>
+    </audio> -->
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/pokemonslist"> List of Pokemons</router-link>
