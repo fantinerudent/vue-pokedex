@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <p>{{ pokemon.name }}</p>
-    <img
+    <!-- LALALALA: {{ getInfos(url) }} -->
+    NAME: {{ pokemonInfo.name}}
+    <!-- <p>{{ pokemon.name }}</p> -->
+    <!-- <img
       id="pokeImg"
       :src="
         hovered ? pokemon.sprites.back_default : pokemon.sprites.front_default
@@ -10,17 +12,33 @@
       srcset=""
       @mouseover="hovered = true"
       @mouseleave="hovered = false"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 export default {
-  props: ["pokemon"],
+  props: ["url"],
   data() {
     return {
       hovered: false,
     };
+  },
+  created() {
+    this.pokemonInfo()
+  },
+  methods: {
+    getInfos(url) {
+      this.$store.dispatch("getPokemonInformations", url).then((result) => {
+        console.log(result)
+        this.infos = result;
+      });
+    },
+  },
+  computed: {
+    pokemonInfo() {
+      return this.getInfos(this.url);
+    },
   },
 };
 </script>

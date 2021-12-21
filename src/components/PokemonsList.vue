@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="loading === false">
     <div id="pagination">
       {{ totalNumberOfPokemons }}
       <v-pagination
@@ -15,25 +15,18 @@
       v-for="pokemon in pokemons"
       :key="pokemon.name"
     >
-      <!-- <PokemonMiniature :pokemon="pokemon" /> -->
       <p>{{ pokemon.name }}</p>
-      <!-- <img
-        id="pokeImg"
-        :src="pokemon.sprites.back_default"
-        alt=""
-        srcset=""
-        @mouseover="hovered = true"
-        @mouseleave="hovered = false"
-      /> -->
-      <button @click="shareDataUrl(pokemon)">
+      <PokemonMiniature :url="pokemon.url"></PokemonMiniature>
+      <!-- <button @click="shareDataUrl(pokemon)">
         Learn more about {{ pokemon.name }}
-      </button>
+      </button> -->
     </div>
   </div>
+  <div v-else>loading {{ loading }}</div>
 </template>
 
 <script>
-// import PokemonMiniature from "./PokemonMiniature";
+import PokemonMiniature from "./PokemonMiniature";
 import axios from "axios";
 const customStyles = {
   ul: {
@@ -50,18 +43,15 @@ const customStyles = {
 
 export default {
   components: {
-    // PokemonMiniature,
+    PokemonMiniature,
   },
   beforeCreate() {
-    this.$store.dispatch(`getPokemons`, { offset: 0 }).then(() => {
-      this.$store.state.pokemons.map((pokemon) => {
-        this.$store.dispatch("getPokemonInformations", pokemon.url);
-      });
-    });
+    this.$store.dispatch(`getPokemons`, { offset: 0 });
   },
 
   data() {
     return {
+      loading: false,
       customStyles,
       pagination: {
         totalPages: 0,
@@ -74,12 +64,6 @@ export default {
   },
 
   methods: {
-    shareDataUrl(pokemon) {
-      this.$router.push({
-        name: "Pokemon's detail",
-        params: { data: pokemon },
-      });
-    },
     totalNumber() {
       let result;
       this.totalNumberOfPokemons = axios
@@ -108,14 +92,27 @@ export default {
     },
     getPokemons() {
       this.$store.dispatch(`getPokemons`, { offset: this.offset }).then(() => {
-        this.$store.state.pokemons.map((pokemon) => {
-          this.$store.dispatch("getPokemonInformations", pokemon.url);
-        });
+        // this.$store.state.pokemons.map((pokemon) => {
+        //   this.$store.dispatch("getPokemonInformations", pokemon.url);
+        // });
+        this.loading = false;
       });
     },
     onChangePage(selectedPage) {
+      this.loading = true;
       this.pagination.page = selectedPage;
       this.getPokemons();
+    },
+    transformImagePokemon(id) {
+      if (id.length === 1) {
+        console.log(id);
+        id = "00" + id;
+      } else if (id.length === 2) {
+        id = "0" + id;
+      }
+      return `https://eternia.fr/public/media/pokedex/artworks/${Number(
+        id
+      )}.png`;
     },
   },
   computed: {
@@ -132,6 +129,10 @@ export default {
   watch: {
     calculPagination() {
       return (this.pagination.itemsToDisplay = this.getItems());
+    },
+    loader() {
+      console.log(this.loading);
+      return this.loading;
     },
   },
 };
