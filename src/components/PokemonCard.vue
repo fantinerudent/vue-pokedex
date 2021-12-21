@@ -1,8 +1,8 @@
 <template>
   <div id="container">
-    <div v-if="actualPokemon.name" id="pokemon-container">
-      <div>{{ actualPokemon.name }}</div>
-      <img :src="actualPokemon.sprites.front_default" alt="pokemon" />
+    <div v-if="pokemon.name" id="pokemon-container">
+      <div>{{ pokemon.name }} id: {{ pokemon.id }}</div>
+      <img :src="urlImg" alt="pokemon" />
     </div>
     <div v-else>
       An error has been detected, please go back to the pokemons' list to choose
@@ -15,18 +15,19 @@
 export default {
   data() {
     return {
-      pokemon: [],
+      pokemon: undefined,
+      urlImg: undefined,
     };
   },
   beforeMount() {
     this.pokemon = this.$route.params.data;
     this.$store.commit("SET_ACTUAL_POKEMON", this.pokemon);
-  },
-
-  computed: {
-    actualPokemon() {
-      return this.$store.state.actualPokemon;
-    },
+    if (this.pokemon.id < 10) {
+      return (this.urlImg = `https://eternia.fr/public/media/pokedex/artworks/00${this.pokemon.id}.png`);
+    } else if (10 < this.pokemon.id < 100) {
+      return (this.urlImg = `https://eternia.fr/public/media/pokedex/artworks/0${this.pokemon.id}.png`);
+    }
+    this.urlImg = `https://eternia.fr/public/media/pokedex/artworks/${this.pokemon.id}.png`;
   },
 };
 </script>

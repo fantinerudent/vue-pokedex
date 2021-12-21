@@ -17,9 +17,6 @@
     >
       <p>{{ pokemon.name }}</p>
       <PokemonMiniature :url="pokemon.url"></PokemonMiniature>
-      <!-- <button @click="shareDataUrl(pokemon)">
-        Learn more about {{ pokemon.name }}
-      </button> -->
     </div>
   </div>
   <div v-else>loading {{ loading }}</div>
@@ -102,17 +99,6 @@ export default {
       this.loading = true;
       this.pagination.page = selectedPage;
       this.getPokemons();
-    },
-    transformImagePokemon(id) {
-      if (id.length === 1) {
-        console.log(id);
-        id = "00" + id;
-      } else if (id.length === 2) {
-        id = "0" + id;
-      }
-      return `https://eternia.fr/public/media/pokedex/artworks/${Number(
-        id
-      )}.png`;
     },
   },
   computed: {

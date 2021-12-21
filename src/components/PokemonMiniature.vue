@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <!-- LALALALA: {{ getInfos(url) }} -->
-    NAME: {{ pokemonInfo.name}}
-    <!-- <p>{{ pokemon.name }}</p> -->
-    <!-- <img
+    NAME: {{ pokemon.name }}
+    <img
       id="pokeImg"
       :src="
         hovered ? pokemon.sprites.back_default : pokemon.sprites.front_default
       "
       alt=""
-      srcset=""
       @mouseover="hovered = true"
       @mouseleave="hovered = false"
-    /> -->
+    />
+    <button @click="shareDataUrl(pokemon)">
+      Learn more about {{ pokemon.name }}
+    </button>
   </div>
 </template>
 
@@ -21,23 +21,21 @@ export default {
   props: ["url"],
   data() {
     return {
+      pokemon: undefined,
       hovered: false,
     };
   },
-  created() {
-    this.pokemonInfo()
+  mounted() {
+    this.$store.dispatch("getPokemonInformations", this.url).then((result) => {
+      this.pokemon = result;
+    });
   },
   methods: {
-    getInfos(url) {
-      this.$store.dispatch("getPokemonInformations", url).then((result) => {
-        console.log(result)
-        this.infos = result;
+    shareDataUrl(pokemon) {
+      this.$router.push({
+        name: "Pokemon's detail",
+        params: { data: pokemon },
       });
-    },
-  },
-  computed: {
-    pokemonInfo() {
-      return this.getInfos(this.url);
     },
   },
 };
