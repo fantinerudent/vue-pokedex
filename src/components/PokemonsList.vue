@@ -15,7 +15,6 @@
       v-for="pokemon in pokemons"
       :key="pokemon.name"
     >
-      <p>{{ pokemon.name }}</p>
       <PokemonMiniature :url="pokemon.url"></PokemonMiniature>
     </div>
   </div>
@@ -89,9 +88,6 @@ export default {
     },
     getPokemons() {
       this.$store.dispatch(`getPokemons`, { offset: this.offset }).then(() => {
-        // this.$store.state.pokemons.map((pokemon) => {
-        //   this.$store.dispatch("getPokemonInformations", pokemon.url);
-        // });
         this.loading = false;
       });
     },
@@ -145,11 +141,7 @@ export default {
 }
 
 .pokemon-container {
-  padding: 20px;
-  background-color: red;
-  min-width: 42%;
   margin: 10px;
-  border-radius: 20px;
 }
 
 #pagination {
